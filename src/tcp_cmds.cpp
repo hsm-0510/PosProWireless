@@ -12,7 +12,7 @@ unsigned long lastAttemptMs = 0;
 const unsigned long RETRY_MS = 5000;
 
 //Thermal Printer Commands
-const char* PRINTER_MSG = "T: 23.5C; A: 160000.00 l/m; F: 1800 rpm\nT: 23.5C; A: 160000.00 l/m; F: 1800 rpm\n\n";
+const char* PRINTER_MSG = "T: 23.5C; A: 160000.00 l/m; F: 1800 rpm\nT: 23.5C; A: 160000.00 l/m; F: 1800 rpm\n";
 const uint8_t printer_cut_paper_cmd[] = {
     0x1D, 
     'V', 
@@ -54,12 +54,14 @@ void printer_print_msg(const char* cmd){
 
 //Cutting Paper
 void printer_cut_paper(){
+    client.write("\n", sizeof("\n"));
     client.write(printer_cut_paper_cmd, sizeof(printer_cut_paper_cmd));
     Serial.printf("Data sent");
 }
 
 //Printer Self Test
 void printer_test_print(){
+    client.write("\n", sizeof("\n"));
     client.write(printer_test_print_cmd, sizeof(printer_test_print_cmd));
     Serial.printf("Data sent");
 }

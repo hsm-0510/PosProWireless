@@ -26,10 +26,10 @@ void loop() {
   // Send once per successful session
   if (!messageSent && client.connected()) {
     //Test Routine
-    printer_print_msg(PRINTER_MSG);
-    printer_print_msg(PRINTER_MSG);
-    printer_print_msg(PRINTER_MSG);
-    printer_print_msg(PRINTER_MSG);
+    for (int i = 0; i < 10; i++)
+    {
+      printer_print_msg(PRINTER_MSG);
+    }
     delay(1000);
     printer_cut_paper();
     delay(1000);
