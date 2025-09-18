@@ -25,7 +25,7 @@ void loop() {
 
   // Send once per successful session
   if (!messageSent && client.connected()) {
-    //Print Message
+    //Test Routine
     printer_print_msg(PRINTER_MSG);
     printer_print_msg(PRINTER_MSG);
     printer_print_msg(PRINTER_MSG);
