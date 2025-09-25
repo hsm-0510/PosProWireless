@@ -8,7 +8,7 @@ void setup() {
   delay(300);
   Serial.println("\nESP32 TCP Sender");
   
-  //Connect with Rount (WiFi Router Code):
+  //Connect with Router (WiFi Router Code):
   //connectWiFi();
 
   //AccessPoint Connection:
@@ -20,6 +20,7 @@ void setup() {
 }
 
 void loop() {
+  
   // Keep Wi-Fi up (WiFi Router Code)
   // if (WiFi.status() != WL_CONNECTED) {
   //   connectWiFi();
@@ -27,8 +28,16 @@ void loop() {
   //   return;
   // }
 
-  //Keep Access Point up:
-  if (!apEnabled())
+  //Try to connect with existing DUC-Access-Point
+  if (WiFi.status() != WL_CONNECTED && found == false && firstCheck == false)
+  {
+    connectAP();
+    delay(500);
+    firstCheck = true;
+  }
+
+  //Keep Access Point up (Checks if it isn't then initializes it):
+  if (!apEnabled() && found == false)
   {
     init_access_point();
     delay(500);
