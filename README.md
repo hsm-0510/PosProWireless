@@ -27,18 +27,6 @@ This project demonstrates how to connect, configure, and control POSPRO 80x ther
 
 ---
 
-## Repository Structure
-PosProWireless/
-├── .vscode/ # VSCode workspace settings
-├── include/ # Header files
-├── lib/ # External libraries
-├── src/ # Main application source code
-├── test/ # Unit tests
-├── platformio.ini # PlatformIO project configuration
-└── .gitignore
-
----
-
 ## Getting Started
 
 ### 1. Clone the Repository
