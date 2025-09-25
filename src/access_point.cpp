@@ -55,23 +55,30 @@ bool apEnabled()
     return (m == WIFI_AP || m == WIFI_AP_STA);
 }
 
-//Connects to existing DUC Access Point Available (if exists, then find free host id: 56, 57, 58, or 59. If doesn't exist, then leave)
+//Connects to existing DUC Access Point Available
 void connectAP()
 {
+  //Leave function if already connected to WiFi
   if (WiFi.status() == WL_CONNECTED) return;
+  // If Access Point found, but isn't connected:
   if (WiFi.status() != WL_CONNECTED && found == true)
   {
     connectWiFi(TARGET_WIFI_SSID, TARGET_WIFI_PASSWORD);
     delay(500);
     return;
   }
-  
+
+  //Debug Prints
   Serial.print("Looking for DUC Access Point: ");
   Serial.println(TARGET_WIFI_SSID);
   
   //Scan: Synchronous, including hidden SSIDs
   int n = WiFi.scanNetworks(false, true); // Asynchronous: False, Show Hidden: True
+  
+  //Debug Prints
   Serial.printf("Scanned Wifi Network and Found %d \n", n);
+
+  //Printing Found AccessPoint
   if (n <= 0)
   {
     Serial.println("No Networks Found \n");
@@ -105,90 +112,4 @@ void connectAP()
   {
     return;
   }
-////Pinging for available DUC devices to setup standardized IP (discontinued, might use espNow later)
-//   if (WiFi.status() == WL_CONNECTED)
-//   {
-//     Serial.print("WiFi OK. My IP: ");
-//     Serial.println(WiFi.localIP());
-//     Serial.print("Pinging ");
-//     Serial.println(TARGET1);
-
-//     //Pinging for free host id
-//     const byte count = 4;
-
-//     int replies = 0;
-//     unsigned long tmin = ULONG_MAX, tmax = 0, tsum = 0;
-
-//     for (byte i = 0; i < count; ++i)
-//     {
-//         unsigned long t0 = millis();
-//         bool ok = Ping.ping(TARGET1, 1);   // <-- only 2 args in this library
-//         unsigned long rtt = millis() - t0;
-
-//         if (ok)
-//         {
-//             replies++;
-//             if (rtt < tmin) tmin = rtt;
-//             if (rtt > tmax) tmax = rtt;
-//             tsum += rtt;
-//         }
-//         else
-//         {
-//             unsigned long t0 = millis();
-//             bool ok = Ping.ping(TARGET2, 1);   // <-- only 2 args in this library
-//             unsigned long rtt = millis() - t0;
-
-//             if (ok)
-//             {
-//                 replies++;
-//                 if (rtt < tmin) tmin = rtt;
-//                 if (rtt > tmax) tmax = rtt;
-//                 tsum += rtt;
-//             }
-//             else
-//             {
-//                 unsigned long t0 = millis();
-//                 bool ok = Ping.ping(TARGET3, 1);   // <-- only 2 args in this library
-//                 unsigned long rtt = millis() - t0;
-
-//                 if (ok)
-//                 {
-//                     replies++;
-//                     if (rtt < tmin) tmin = rtt;
-//                     if (rtt > tmax) tmax = rtt;
-//                     tsum += rtt;
-//                 }
-//                 else
-//                 {
-//                     unsigned long t0 = millis();
-//                     bool ok = Ping.ping(TARGET4, 1);   // <-- only 2 args in this library
-//                     unsigned long rtt = millis() - t0;
-
-//                     if (ok)
-//                     {
-//                         replies++;
-//                         if (rtt < tmin) tmin = rtt;
-//                         if (rtt > tmax) tmax = rtt;
-//                         tsum += rtt;
-//                     }
-//                     else
-//                     {
-
-//                     }
-//                 }
-//             }
-//         }
-//         delay(200);
-//     }
-
-//     if (replies > 0)
-//     {
-//         unsigned long avg = tsum / replies;
-//         Serial.printf("Replies: %d/%d | min=%lu ms avg=%lu ms max=%lu ms\n",
-//                         replies, count, tmin, avg, tmax);
-//     }
-//     else
-//     {
-//         Serial.println("Host unreachable (no replies).");
-//     }
 }
